@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
@@ -73,6 +74,7 @@ public class RedisTest {
     @SuppressWarnings("unchecked")
     public void testList() {
         ListOperations listOperations = redisTemplate.opsForList();
+        redisTemplate.delete("ued");
         listOperations.leftPushAll("ued", "a", "b", "c", "d");
         List list = listOperations.range("ued", 0, -1);
         System.out.println(list);
@@ -100,6 +102,17 @@ public class RedisTest {
 
         redisTemplate.getExpire("adv");
         redisTemplate.expire("adv", 10, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void testZset() {
+        ZSetOperations zSetOperations = redisTemplate.opsForZSet();
+        zSetOperations.add("zset","1",1);
+        zSetOperations.add("zset","100",100);
+        zSetOperations.add("zset","-1",-1);
+        zSetOperations.add("zset","10",10);
+        Set set = zSetOperations.range("zset", 0, -1);
+        System.out.println(set);
     }
 
 }
