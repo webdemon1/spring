@@ -3,6 +3,10 @@ package com.alibaba.demon.sort;
 /**
  * 插入排序
  *
+ * 插入排序由 n-1 次排序组成
+ * 对于 p=1 到 n-1 次,
+ * 保证 0 至 p-1位置上的元素为已排序状态
+ *
  * @author: Demon
  * @create: 2019-04-08
  **/
