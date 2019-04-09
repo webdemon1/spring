@@ -60,6 +60,13 @@ public class RedisTest {
     }
 
     @Test
+    public void testGetFromCache() {
+        User user = redisService.getFromCache(66L);
+        Object u = redisService.getDB().get(66L);
+        assertEquals(user,u);
+    }
+
+    @Test
     public void testHash() {
         User user = User.builder().gender("male").id(1L).name("Jordon").build();
         User u = redisService.hashPutAndGet(user);

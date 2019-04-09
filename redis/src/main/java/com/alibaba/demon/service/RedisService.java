@@ -29,6 +29,9 @@ public class RedisService {
 
     private static Map<Long, Object> DB = Maps.newConcurrentMap();
 
+    public Map<Long, Object> getDB() {
+        return DB;
+    }
 
     private final HashOperations<String, Object, Object> hashOperation;
     private final ListOperations<String, Object> listOperation;
@@ -63,6 +66,14 @@ public class RedisService {
     public void delete(Long id) {
         log.info("@RedisService.delete{}", id);
         DB.remove(id);
+    }
+
+    @Cacheable("USER")
+    public User getFromCache(Long id) {
+        log.info("@RedisService.getFromCache{}", id);
+        User user = User.builder().id(id).gender("Female").name("tale").build();
+        DB.put(id,user);
+        return (User) DB.get(id);
     }
 
     /**  ------ hash ----- */
