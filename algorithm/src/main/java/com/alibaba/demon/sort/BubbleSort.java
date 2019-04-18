@@ -8,18 +8,18 @@ package com.alibaba.demon.sort;
 public class BubbleSort {
 
     public static void main(String[] args) {
-        int[] array = {23, 4, 56, 2, 4, 56, -333, 344};
+        Integer[] array = {23, 4, 56, 2, 4, 56, -333, 344};
         bubbleSort(array);
         for (int i : array) {
             System.out.print(i+" ");
         }
     }
 
-    private static void bubbleSort(int[] arr) {
+    private static <T extends Comparable<T>> void bubbleSort(T[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             for (int j = 0; j < arr.length - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int temp = arr[j];
+                if (arr[j].compareTo(arr[j + 1]) >0) {
+                    T temp = arr[j];
 
                     arr[j] = arr[j + 1];
 

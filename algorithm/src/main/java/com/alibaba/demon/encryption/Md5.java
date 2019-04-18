@@ -1,4 +1,4 @@
-package com.encryption;
+package com.alibaba.demon.encryption;
 
 import org.junit.jupiter.api.Test;
 

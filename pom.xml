@@ -13,6 +13,7 @@
         <module>io</module>
         <module>thread</module>
         <module>redis</module>
+        <module>design-pattern</module>
     </modules>
 
     <parent>
