@@ -6,7 +6,7 @@
 
  love what you do, work hard and make history.
 
- work hard, Everyday count, because Everyday create your history.
+ Everyday count, because Everyday create your history.
 
  */
 package com.alibaba.demon.singleton;
