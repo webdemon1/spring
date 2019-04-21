@@ -142,4 +142,33 @@ public class NioReactor {
         selectionKey.attach(key.attachment());
     }
 
+    public void changeOps(SelectionKey key, int interestedOps) {
+        pendingCommands.add(new ChangeKeyOpsCommand(key, interestedOps));
+    }
+
+    class ChangeKeyOpsCommand implements Runnable {
+
+        private SelectionKey key;
+
+        private int interestedOps;
+
+        public ChangeKeyOpsCommand(SelectionKey key, int interestedOps) {
+            this.key = key;
+            this.interestedOps = interestedOps;
+        }
+
+        @Override
+        public void run() {
+            key.interestOps(interestedOps);
+        }
+
+        @Override
+        public String toString() {
+            return "ChangeKeyOpsCommand{" +
+                    "key=" + key +
+                    ", interestedOps=" + interestedOps +
+                    '}';
+        }
+    }
+
 }
