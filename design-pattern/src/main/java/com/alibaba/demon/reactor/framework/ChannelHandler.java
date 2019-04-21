@@ -1,5 +1,7 @@
 package com.alibaba.demon.reactor.framework;
 
+import java.nio.channels.SelectionKey;
+
 /**
  *
  * @author: Demon
@@ -8,5 +10,6 @@ package com.alibaba.demon.reactor.framework;
 public interface ChannelHandler {
 
 
+    void handleChannelRead(AbstractNioChannel channel, Object readObject, SelectionKey key);
 
 }
