@@ -11,4 +11,6 @@ public interface Dispatcher {
 
     void onChannelReadEvent(AbstractNioChannel channel, Object readObject, SelectionKey key);
 
+    void stop() throws InterruptedException;
+
 }

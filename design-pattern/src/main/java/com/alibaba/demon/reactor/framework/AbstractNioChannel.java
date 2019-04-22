@@ -71,4 +71,8 @@ public abstract class AbstractNioChannel {
         this.reactor = reactor;
     }
 
+    public ChannelHandler getHandler() {
+        return handler;
+    }
+
 }

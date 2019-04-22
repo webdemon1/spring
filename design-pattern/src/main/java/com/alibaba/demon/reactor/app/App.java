@@ -1,19 +1,20 @@
 package com.alibaba.demon.reactor.app;
 
-import com.alibaba.demon.reactor.framework.AbstractNioChannel;
-import com.alibaba.demon.reactor.framework.ChannelHandler;
-import com.alibaba.demon.reactor.framework.NioReactor;
+import com.alibaba.demon.reactor.framework.*;
+
+import javax.swing.*;
+import java.io.IOException;
 
 /**
  * * This application demonstrates Reactor pattern. The example demonstrated is a Distributed Logging
  * Service where it listens on multiple TCP or UDP sockets for incoming log requests.
- *
+ * <p>
  * <p>
  * <i>INTENT</i> <br>
  * The Reactor design pattern handles service requests that are delivered concurrently to an
  * application by one or more clients. The application can register specific handlers for processing
  * which are called by reactor on specific events.
- *
+ * <p>
  * <p>
  * <i>PROBLEM</i> <br>
  * Server applications in a distributed system must handle multiple clients that send them service
@@ -24,31 +25,31 @@ import com.alibaba.demon.reactor.framework.NioReactor;
  * <li>Programming Simplicity</li>
  * <li>Adaptability</li>
  * </ul>
- *
+ * <p>
  * <p>
  * <i>PARTICIPANTS</i> <br>
  * <ul>
  * <li>Synchronous Event De-multiplexer
  * <p>
- *     {@link NioReactor} plays the role of synchronous event de-multiplexer.
+ * {@link NioReactor} plays the role of synchronous event de-multiplexer.
  * It waits for events on multiple channels registered to it in an event loop.
  * </p>
  * </li>
  * <li>Initiation Dispatcher
  * <p>
- *     {@link NioReactor} plays this role as the application specific {@link ChannelHandler}s
+ * {@link NioReactor} plays this role as the application specific {@link ChannelHandler}s
  * are registered to the reactor.
  * </p>
  * </li>
  * <li>Handle
  * <p>
- *     {@link AbstractNioChannel} acts as a handle that is registered to the reactor.
+ * {@link AbstractNioChannel} acts as a handle that is registered to the reactor.
  * When any events occur on a handle, reactor calls the appropriate handler.
  * </p>
  * </li>
  * <li>Event Handler
  * <p>
- *      {@link ChannelHandler} acts as an event handler, which is bound to a
+ * {@link ChannelHandler} acts as an event handler, which is bound to a
  * channel and is called back when any event occurs on any of its associated handles. Application
  * logic resides in event handlers.
  * </p>
@@ -64,7 +65,29 @@ import com.alibaba.demon.reactor.framework.NioReactor;
  **/
 public class App {
 
+    private NioReactor nioReactor;
 
+    private Dispatcher dispatcher;
+
+    public App(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    public static void main(String[] args) throws IOException {
+        new App(new ThreadPoolDispatcher(2)).start();
+    }
+
+    private void start() throws IOException {
+        nioReactor = new NioReactor(dispatcher);
+        LoggingHandler loggingHandler = new LoggingHandler();
+        nioReactor.registerChannel(tcpChannel(6666, loggingHandler)).start();
+    }
+
+    private AbstractNioChannel tcpChannel(int port, ChannelHandler handler) throws IOException {
+        NioServerSocketChannel channel = new NioServerSocketChannel(handler, port);
+        channel.bind();
+        return channel;
+    }
 
 
 }
