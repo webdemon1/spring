@@ -2,7 +2,6 @@ package com.alibaba.demon.reactor.app;
 
 import com.alibaba.demon.reactor.framework.*;
 
-import javax.swing.*;
 import java.io.IOException;
 
 /**
@@ -63,18 +62,18 @@ import java.io.IOException;
  * @author: Demon
  * @create: 2019-04-21
  **/
-public class App {
+public class Server {
 
     private NioReactor nioReactor;
 
     private Dispatcher dispatcher;
 
-    public App(Dispatcher dispatcher) {
+    public Server(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 
     public static void main(String[] args) throws IOException {
-        new App(new ThreadPoolDispatcher(2)).start();
+        new Server(new ThreadPoolDispatcher(2)).start();
     }
 
     private void start() throws IOException {

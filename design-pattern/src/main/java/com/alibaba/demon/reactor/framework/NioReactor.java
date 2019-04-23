@@ -138,7 +138,7 @@ public class NioReactor {
         ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
         SocketChannel socketChannel = serverSocketChannel.accept();
         socketChannel.configureBlocking(false);
-        SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+        SelectionKey selectionKey = socketChannel.register(selector, SelectionKey.OP_READ);
         selectionKey.attach(key.attachment());
     }
 

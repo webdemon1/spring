@@ -36,7 +36,7 @@ public class NioServerSocketChannel extends AbstractNioChannel {
 
     @Override
     public int getInterestedOps() {
-        return 0;
+        return SelectionKey.OP_ACCEPT;
     }
 
     public ServerSocketChannel getJavaChannel() {

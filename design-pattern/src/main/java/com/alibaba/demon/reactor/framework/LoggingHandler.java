@@ -18,16 +18,16 @@ public class LoggingHandler implements ChannelHandler {
     @Override
     public void handleChannelRead(AbstractNioChannel channel, Object readObject, SelectionKey key) {
 
-        if(readObject instanceof ByteBuffer) {
-           doLogging((ByteBuffer) readObject);
-           channel.write(ByteBuffer.wrap(ACK),key);
-        } else if(readObject instanceof DatagramPacket) {
+        if (readObject instanceof ByteBuffer) {
+            doLogging((ByteBuffer) readObject);
+            channel.write(ByteBuffer.wrap(ACK), key);
+        } else if (readObject instanceof DatagramPacket) {
 
         }
 
     }
 
     private void doLogging(ByteBuffer readObject) {
-        log.info("--LoggingHandler.doLogging data:{}",new String(readObject.array(),0,readObject.limit()));
+        log.info("--LoggingHandler.doLogging data:{}", new String(readObject.array(), 0, readObject.limit()));
     }
 }
